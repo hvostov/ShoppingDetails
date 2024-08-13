@@ -126,9 +126,10 @@ void MainWindow::fillTable(QString str)
     auto workbook  = workbooks->querySubObject("Open(const QString&)",str);
     auto sheets    = workbook->querySubObject("Worksheets");
     auto sheet     = sheets->querySubObject("Item(int)", 1);
-    auto shapes    = sheet->querySubObject("Shapes.Count");
+    auto shapes    = sheet->querySubObject("Shapes");
+    auto shapesCnt = shapes->property("Count");
     // auto shapesCnt = shapes->querySubObject("Count");
-    qDebug() << "SHAPES CNT" << shapes;
+    qDebug() << "SHAPES CNT" << shapesCnt.toInt();
 
     for(int i = 0, j = 3; i < 2; ++i) {
         //const QString s = "Рисунок " + QString::number(i);
