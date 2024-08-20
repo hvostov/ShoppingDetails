@@ -9,7 +9,12 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set (CMAKE_PREFIX_PATH "D:\\Qt\\6.7.0\\mingw_64\\lib\\cmake\\Qt6\\")
+#set (CMAKE_PREFIX_PATH "D:\\Qt\\6.0.7\\msvc2019_64\\lib\\cmake\\Qt6\\")
+#set (CMAKE_PREFIX_PATH "D:/Qt/6.0.7/mingw_64/lib/cmake/Qt6")
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+set (CMAKE_PREFIX_PATH "D:\\Qt\\6.7.0\\mingw_64\\lib\\cmake\\")
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS AxContainer)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS AxContainer)
