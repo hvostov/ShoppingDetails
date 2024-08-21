@@ -90,7 +90,7 @@ void MainWindow::on_profitButton_clicked() {
     // QString str = QString::number(itemValue);
     // qDebug() << str;
     double total = 0;
-    for(int row = 0; row < 50; ++row) {
+    for(int row = 0; row < shapes_count; ++row) {
         double itemValue = ui->tableWidget->item(row, 6)->text().toDouble();
         double itemValue1 = ui->tableWidget->item(row, 8)->text().toDouble();
 
@@ -128,13 +128,15 @@ void MainWindow::fillTable(QString str)
     auto sheet     = sheets->querySubObject("Item(int)", 1);
     auto shapes    = sheet->querySubObject("Shapes");
     auto shapesCnt = shapes->property("Count");
+    this->shapes_count   = shapesCnt.toInt() - 2;
     // auto shapesCnt = shapes->querySubObject("Count");
     qDebug() << "SHAPES CNT" << shapesCnt.toInt();
 
-    for(int i = 0, j = 3; i < 2; ++i) {
+    for(int i = 0, j = 3; i < shapes_count; ++i) {
         //const QString s = "Рисунок " + QString::number(i);
         auto picture = sheet->querySubObject("Shapes(int)", j);
-        picture->querySubObject("Copy()");
+        // picture->querySubObject("Copy()");
+        picture->dynamicCall("Copy()");
         const QClipboard *clipboard = QApplication::clipboard();
         const QMimeData *mimeData = clipboard->mimeData();
         if (mimeData->hasImage()) {
@@ -149,7 +151,7 @@ void MainWindow::fillTable(QString str)
         }
     }
 
-    for (int row = 19, i = 0; (row <= 68); ++row, ++i)
+    for (int row = 19, i = 0; (row <= 19 + shapes_count); ++row, ++i)
     {
         for(int col = 4, j = 0; col < 14; ++col
              ) {
@@ -169,39 +171,6 @@ void MainWindow::fillTable(QString str)
 
         }
     }
-
-    // const QString s = "Рисунок 4";
-    // //auto picture4 = sheet->querySubObject("Shapes(const QString&)", s);
-    // auto picture4 = sheet->querySubObject("Shapes(int)", 2);
-    // picture4->querySubObject("Copy()");
-
-    // const QClipboard *clipboard = QApplication::clipboard();
-    // const QMimeData *mimeData = clipboard->mimeData();
-
-    // QLabel *label2 = new QLabel(this);
-
-    //if (mimeData->hasImage()) {
-        // label2->setPixmap(qvariant_cast<QPixmap>(mimeData->imageData()));
-        // label2->setScaledContents(true);
-        // ui->tableWidget->setCellWidget(1,1, label2);
-    // }
-    // else {
-    //     qDebug() << "no image!!!!!!!!!!";
-    // }
-
-
-
-    // read the first cells in row 1..5
-    for (int r = 6; (r <= 12); ++r)
-    {
-        auto cCell = sheet->querySubObject("Cells(int,int)",r,5);
-        qDebug() << cCell->dynamicCall("Value()").toString();//toInt();
-    }
-    // QLabel *label1 = new QLabel(this);
-    // QPixmap pixMap("C:/Users/ZBook/Desktop/excelForQt/Рисунок1.png");
-    // label1->setPixmap(pixMap);
-    // label1->setScaledContents(true);
-    // ui->tableWidget->setCellWidget(2,2, label1);
 
 }
 

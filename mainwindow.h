@@ -47,6 +47,7 @@ private:
     QLineEdit *exchangeLineEdit;
     QLabel *totalCostLabel;
     QLabel *totalCostLabel1;
+    int shapes_count;
 
 };
 #endif // MAINWINDOW_H
