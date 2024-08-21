@@ -1,0 +1,8 @@
+# ninja log v5
+2	3639	7458568217636501	ShoppingDetails_autogen/timestamp	20bde450c52e07e7
+2	3639	7458568217636501	C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Desktop_Qt_llvm_mingw_64_bit-Debug/ShoppingDetails_autogen/mocs_compilation.cpp	20bde450c52e07e7
+3663	16781	7458568350393138	CMakeFiles/ShoppingDetails.dir/main.cpp.obj	2a59789a54795177
+3668	17177	7458568354247119	CMakeFiles/ShoppingDetails.dir/mainwindow.cpp.obj	b78e1c2451ea853f
+2	3639	7458568217636501	ShoppingDetails_autogen/mocs_compilation.cpp	20bde450c52e07e7
+3659	17182	7458568354403357	CMakeFiles/ShoppingDetails.dir/ShoppingDetails_autogen/mocs_compilation.cpp.obj	fb5d7f34e68842eb
+2	3639	7458568217636501	C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Desktop_Qt_llvm_mingw_64_bit-Debug/ShoppingDetails_autogen/timestamp	20bde450c52e07e7
