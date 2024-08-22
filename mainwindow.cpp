@@ -13,7 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
     progressBar(new QProgressBar(this)),
     statusLabel(new QLabel(this)),
     markUpTotalCostLabel(new QLabel(this)),
-    markUpTotalCostLabel1(new QLabel(this))
+    markUpTotalCostLabel1(new QLabel(this)),
+    m(new QMutex())
 {
     ui->setupUi(this);
 
@@ -84,6 +85,9 @@ MainWindow::MainWindow(QWidget *parent)
     rightLayout->setColumnStretch(0, 0);
     connect(this, &MainWindow::havePath, this, &MainWindow::startWorkInAThread);
     connect(profitButton, &QPushButton::clicked, this, &MainWindow::countProfit);
+
+    // QMutex mutex;
+    // QMutex *m = &mutex;
 }
 
 
@@ -109,6 +113,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::fillImage(int i, int cnt)
 {
+    m->lock();
     //this->shapes_count = shapes_count;
     statusLabel->setText("Загружаем картинки");
     const QClipboard *clipboard = QApplication::clipboard();
@@ -125,6 +130,7 @@ void MainWindow::fillImage(int i, int cnt)
     onePercent = 50.0/double(cnt);
     progressValue += onePercent;
     progressBar->setValue(ceil(progressValue));
+    m->unlock();
 }
 
 void MainWindow::fillCell(QString str, int i, int j)
@@ -195,7 +201,7 @@ void MainWindow::countProfit()/*on_profitButton_clicked()*/ {
 
 void MainWindow::startWorkInAThread(QString path)
 {
-    FillTable *filler = new FillTable(nullptr, path);
+    FillTable *filler = new FillTable(nullptr, path, m);
     connect(filler, &FillTable::shapeReady, this, &MainWindow::fillImage);
     connect(filler, &FillTable::cellReady, this, &MainWindow::fillCell);
     connect(filler, &FillTable::tableFillFinished, this, &MainWindow::statusFinished);

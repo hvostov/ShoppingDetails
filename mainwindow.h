@@ -32,6 +32,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QMutex *m;
 
 signals:
     void havePath(QString str);
@@ -62,6 +63,7 @@ private:
     double onePercent = 0;
     QLabel *markUpTotalCostLabel;
     QLabel *markUpTotalCostLabel1;
+
 
 };
 #endif // MAINWINDOW_H

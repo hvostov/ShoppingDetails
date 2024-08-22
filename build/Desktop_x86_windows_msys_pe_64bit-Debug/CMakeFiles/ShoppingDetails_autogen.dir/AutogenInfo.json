@@ -399,6 +399,12 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Users/ZBook/Qt_projects/ShoppingDetails/filltable.h",
+			"MU",
+			"EWIEGA46WW/moc_filltable.cpp",
+			null
+		],
+		[
 			"C:/Users/ZBook/Qt_projects/ShoppingDetails/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
@@ -462,6 +468,11 @@
 	"SETTINGS_FILE" : "C:/Users/ZBook/Qt_projects/ShoppingDetails/build/Desktop_x86_windows_msys_pe_64bit-Debug/CMakeFiles/ShoppingDetails_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
+		[
+			"C:/Users/ZBook/Qt_projects/ShoppingDetails/filltable.cpp",
+			"MU",
+			null
+		],
 		[ "C:/Users/ZBook/Qt_projects/ShoppingDetails/main.cpp", "MU", null ],
 		[
 			"C:/Users/ZBook/Qt_projects/ShoppingDetails/mainwindow.cpp",

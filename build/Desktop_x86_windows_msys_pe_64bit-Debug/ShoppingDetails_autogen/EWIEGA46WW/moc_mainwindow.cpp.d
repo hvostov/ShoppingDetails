@@ -26,6 +26,7 @@ C:/Users/ZBook/Qt_projects/ShoppingDetails/build/Desktop_x86_windows_msys_pe_64b
   C:/Qt/6.7.0/msvc2019_64/include/QtCore/QSizeF \
   C:/Qt/6.7.0/msvc2019_64/include/QtCore/QString \
   C:/Qt/6.7.0/msvc2019_64/include/QtCore/QStringList \
+  C:/Qt/6.7.0/msvc2019_64/include/QtCore/QThread \
   C:/Qt/6.7.0/msvc2019_64/include/QtCore/QVariant \
   C:/Qt/6.7.0/msvc2019_64/include/QtCore/QtCore \
   C:/Qt/6.7.0/msvc2019_64/include/QtCore/QtCoreDepends \
@@ -418,9 +419,11 @@ C:/Users/ZBook/Qt_projects/ShoppingDetails/build/Desktop_x86_windows_msys_pe_64b
   C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/QCommonStyle \
   C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/QFileDialog \
   C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/QHBoxLayout \
+  C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/QLabel \
   C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/QLayout \
   C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/QLineEdit \
   C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/QMainWindow \
+  C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/QProgressBar \
   C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/QPushButton \
   C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/QScrollerProperties \
   C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/QSpacerItem \
@@ -549,4 +552,5 @@ C:/Users/ZBook/Qt_projects/ShoppingDetails/build/Desktop_x86_windows_msys_pe_64b
   C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/qwhatsthis.h \
   C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/qwidget.h \
   C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/qwidgetaction.h \
-  C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/qwizard.h
+  C:/Qt/6.7.0/msvc2019_64/include/QtWidgets/qwizard.h \
+  C:/Users/ZBook/Qt_projects/ShoppingDetails/filltable.h
