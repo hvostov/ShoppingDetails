@@ -325,6 +325,7 @@ C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Desktop_Qt_MinGW_64_bit-Debug/Sho
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wctype.h \
+  C:/Users/ahvostov/QT_prj/ShoppingDetails/filltable.h \
   D:/Qt/6.7.0/mingw_64/include/QtAxBase/QtAxBase \
   D:/Qt/6.7.0/mingw_64/include/QtAxBase/QtAxBaseDepends \
   D:/Qt/6.7.0/mingw_64/include/QtAxBase/qtaxbaseversion.h \
@@ -352,6 +353,7 @@ C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Desktop_Qt_MinGW_64_bit-Debug/Sho
   D:/Qt/6.7.0/mingw_64/include/QtCore/QSizeF \
   D:/Qt/6.7.0/mingw_64/include/QtCore/QString \
   D:/Qt/6.7.0/mingw_64/include/QtCore/QStringList \
+  D:/Qt/6.7.0/mingw_64/include/QtCore/QThread \
   D:/Qt/6.7.0/mingw_64/include/QtCore/QVariant \
   D:/Qt/6.7.0/mingw_64/include/QtCore/QtCore \
   D:/Qt/6.7.0/mingw_64/include/QtCore/QtCoreDepends \
@@ -744,9 +746,11 @@ C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Desktop_Qt_MinGW_64_bit-Debug/Sho
   D:/Qt/6.7.0/mingw_64/include/QtWidgets/QCommonStyle \
   D:/Qt/6.7.0/mingw_64/include/QtWidgets/QFileDialog \
   D:/Qt/6.7.0/mingw_64/include/QtWidgets/QHBoxLayout \
+  D:/Qt/6.7.0/mingw_64/include/QtWidgets/QLabel \
   D:/Qt/6.7.0/mingw_64/include/QtWidgets/QLayout \
   D:/Qt/6.7.0/mingw_64/include/QtWidgets/QLineEdit \
   D:/Qt/6.7.0/mingw_64/include/QtWidgets/QMainWindow \
+  D:/Qt/6.7.0/mingw_64/include/QtWidgets/QProgressBar \
   D:/Qt/6.7.0/mingw_64/include/QtWidgets/QPushButton \
   D:/Qt/6.7.0/mingw_64/include/QtWidgets/QScrollerProperties \
   D:/Qt/6.7.0/mingw_64/include/QtWidgets/QSpacerItem \

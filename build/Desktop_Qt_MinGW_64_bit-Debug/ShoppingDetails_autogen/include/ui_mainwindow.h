@@ -94,8 +94,9 @@ public:
         tableWidget->setCornerButtonEnabled(true);
         tableWidget->setRowCount(50);
         tableWidget->horizontalHeader()->setCascadingSectionResizes(false);
+        tableWidget->horizontalHeader()->setMinimumSectionSize(125);
         tableWidget->horizontalHeader()->setDefaultSectionSize(125);
-        tableWidget->horizontalHeader()->setStretchLastSection(true);
+        tableWidget->horizontalHeader()->setStretchLastSection(false);
         tableWidget->verticalHeader()->setDefaultSectionSize(150);
         tableWidget->verticalHeader()->setStretchLastSection(false);
 
@@ -104,7 +105,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 26));
+        menubar->setGeometry(QRect(0, 0, 800, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
