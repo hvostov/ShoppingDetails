@@ -15,6 +15,8 @@
 #include <QLineEdit>
 #include <QSpacerItem>
 #include <cmath>
+#include <QProgressBar>
+#include "filltable.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -36,8 +38,14 @@ signals:
 
 private slots:
     void on_pushButton_clicked();
-    void fillTable(QString str);
-    void on_profitButton_clicked();
+    //void fillTable(QString str);
+    void fillImage(int i, int cnt);
+    void fillCell(QString str, int i, int j);
+    // void on_profitButton_clicked();
+    void countProfit();
+    void startWorkInAThread(QString path);
+    void statusFinished(int cnt);
+    // void onTableFillStarted(int cnt);
 
 private:
     Ui::MainWindow *ui;
@@ -47,7 +55,13 @@ private:
     QLineEdit *exchangeLineEdit;
     QLabel *totalCostLabel;
     QLabel *totalCostLabel1;
-    int shapes_count;
+    QProgressBar *progressBar;
+    QLabel *statusLabel;
+    int shapes_count = 0;
+    double progressValue = 0;
+    double onePercent = 0;
+    QLabel *markUpTotalCostLabel;
+    QLabel *markUpTotalCostLabel1;
 
 };
 #endif // MAINWINDOW_H
