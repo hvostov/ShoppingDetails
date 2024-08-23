@@ -66,6 +66,13 @@ private:
     double onePercent = 0;
     QLabel *markUpTotalCostLabel;
     QLabel *markUpTotalCostLabel1;
+    QLabel *purchaseCostsLabel;
+    QLabel *goodsLabel;
+    QLabel *shippingLabel;
+    QLineEdit *goodsLineEdit;
+    QLineEdit *shippingLineEdit;
+    QLabel *revenueLabelTitle;
+    QLabel *revenueLabelValue;
 
 
 };

@@ -15,8 +15,16 @@ MainWindow::MainWindow(QWidget *parent)
     markUpTotalCostLabel(new QLabel(this)),
     markUpTotalCostLabel1(new QLabel(this)),
     m(new QMutex()),
-    imageDealed(new QWaitCondition())
+    imageDealed(new QWaitCondition()),
+    purchaseCostsLabel(new QLabel(this)),
+    goodsLabel(new QLabel(this)),
+    shippingLabel(new QLabel(this)),
+    revenueLabelTitle(new QLabel(this)),
+    revenueLabelValue(new QLabel(this)),
+    goodsLineEdit(new QLineEdit(this)),
+    shippingLineEdit(new QLineEdit(this))
 {
+
     ui->setupUi(this);
 
     profitButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -35,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     // rightLayout->setSizeConstraint(QLayout::SetFixedSize);
     // rightLayout->setRowStretch(3,0);
     // rightLayout->setColumnStretch(1,1);
-    rightLayout->setVerticalSpacing(3);
+    rightLayout->setVerticalSpacing(10);
     // rightLayout->set
 
 
@@ -62,23 +70,48 @@ MainWindow::MainWindow(QWidget *parent)
     QLabel *profitLabel = new QLabel(this);
     QLabel *exchangeLabel = new QLabel(this);
     //QLabel *totalCostLabel = new QLabel(this);
-    // QSpacerItem *spacerItem = new QSpacerItem(40,20);
+
     profitLabel->setText("Наценка, %");
     exchangeLabel->setText("Курс Р к Ю");
     // profitLabel->setMaximumWidth(100);
-    rightLayout->addWidget(profitLabel, 0, 1, Qt::AlignTop);
-    rightLayout->addWidget(profitButton, 2, 1, 1, 2, Qt::AlignTop );
-    rightLayout->addWidget(profitLineEdit, 0, 2, Qt::AlignTop);
-    // rightLayout->addItem(spacerItem, 2,1,1,2);
-    rightLayout->addWidget(exchangeLabel, 1, 1, Qt::AlignTop);
-    rightLayout->addWidget(totalCostLabel, 7, 1, 1, 2, Qt::AlignHCenter);
-    rightLayout->addWidget(totalCostLabel1, 6, 1, 1, 2, Qt::AlignHCenter);
-    rightLayout->addWidget(markUpTotalCostLabel, 9, 1, 1, 2, Qt::AlignHCenter);
-    rightLayout->addWidget(markUpTotalCostLabel1, 8, 1, 1, 2, Qt::AlignHCenter);
+    rightLayout->addWidget(profitLabel, 0, 1);
+    rightLayout->addWidget(profitLineEdit, 0, 2);
+    rightLayout->addWidget(exchangeLabel, 1, 1);
+    rightLayout->addWidget(exchangeLineEdit, 1, 2);
+    rightLayout->addWidget(profitButton, 2, 1, 1, 2);
+
+    // QSpacerItem *spacerItem = new QSpacerItem(40,80);
+    // rightLayout->addItem(spacerItem, 3,1,1,2);
+    rightLayout->setRowMinimumHeight(3, 100);
+    // rightLayout->setRowStretch(4, 0);
+
+    rightLayout->addWidget(purchaseCostsLabel, 4, 1, 1, 2, Qt::AlignBottom);
+    rightLayout->addWidget(goodsLabel, 5, 1);
+    rightLayout->addWidget(goodsLineEdit, 5, 2);
+    goodsLineEdit->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    rightLayout->addWidget(shippingLabel, 6, 1);
+    rightLayout->addWidget(shippingLineEdit, 6, 2);
+    shippingLineEdit->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    purchaseCostsLabel->setText("Затраты на покупку товара:");
+    goodsLabel->setText("Товар");
+    shippingLabel->setText("Доставка");
+
+    // rightLayout->addItem(spacerItem, 7,1,1,2);
+    rightLayout->setRowMinimumHeight(7, 80);
+    rightLayout->setRowMinimumHeight(8, 80);
+
+    rightLayout->addWidget(totalCostLabel, 11, 1, 1, 2, Qt::AlignBottom);
+    rightLayout->addWidget(totalCostLabel1, 10, 1, 1, 2, Qt::AlignBottom);
+    rightLayout->addWidget(markUpTotalCostLabel, 13, 1, 1, 2, Qt::AlignBottom);
+    rightLayout->addWidget(markUpTotalCostLabel1, 12, 1, 1, 2, Qt::AlignBottom);
+    rightLayout->addWidget(revenueLabelValue, 15, 1, 1, 2, Qt::AlignBottom);
+    rightLayout->addWidget(revenueLabelTitle, 14, 1, 1, 2, Qt::AlignBottom);
+    revenueLabelTitle->setText("Выручка:");
+
     totalCostLabel1->setText("Общая стоимость, руб :");
     markUpTotalCostLabel1->setText("Общая стоимость с наценкой, руб :");
     // rightLayout->addWidget(exchangeButton, 4, 1, 1, 2, Qt::AlignTop );
-    rightLayout->addWidget(exchangeLineEdit, 1, 2, Qt::AlignTop);
+
     // rightLayout->setRowStretch(1,1);
     // rightLayout->setRowMinimumHeight(0, 10);
     rightLayout->setRowStretch(0,0);
@@ -90,6 +123,7 @@ MainWindow::MainWindow(QWidget *parent)
     // QMutex mutex;
     // QMutex *m = &mutex;
     // QWaitCondition imageDealed;
+    qDebug() << rightLayout->rowCount() << "asodfjiaoifjoawijf";
 }
 
 
@@ -206,6 +240,9 @@ void MainWindow::countProfit()/*on_profitButton_clicked()*/ {
     }
     totalCostLabel->setText(QString::number(total));
     markUpTotalCostLabel->setText(QString::number(total*mult));
+    // if(goodsLineEdit->text())
+    revenueLabelValue->setText(QString::number(total*mult - goodsLineEdit->text().toDouble()
+                                               - shippingLineEdit->text().toDouble()));
 
 }
 
