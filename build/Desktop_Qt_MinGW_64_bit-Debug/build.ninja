@@ -192,7 +192,7 @@ build ShoppingDetails_autogen/timestamp ShoppingDetails_autogen/mocs_compilation
 #############################################
 # Phony custom command for CMakeFiles\ShoppingDetails_autogen_timestamp_deps
 
-build CMakeFiles/ShoppingDetails_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/ShoppingDetails_autogen_timestamp_deps: phony D$:/Qt/6.7.0/mingw_64/./bin/uic.exe D$:/Qt/6.7.0/mingw_64/./bin/moc.exe D$:/Qt/6.7.0/mingw_64/lib/libQt6Core.a D$:/Qt/6.7.0/mingw_64/lib/libQt6AxContainer.a D$:/Qt/6.7.0/mingw_64/lib/libQt6Widgets.a
+build CMakeFiles/ShoppingDetails_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/ShoppingDetails_autogen_timestamp_deps: phony D$:/Qt/6.7.0/mingw_64/./bin/uic.exe D$:/Qt/6.7.0/mingw_64/./bin/moc.exe D$:/Qt/6.7.0/mingw_64/lib/libQt6Widgets.a D$:/Qt/6.7.0/mingw_64/lib/libQt6AxContainer.a D$:/Qt/6.7.0/mingw_64/lib/libQt6Core.a
 
 
 #############################################

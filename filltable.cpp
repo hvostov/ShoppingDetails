@@ -1,7 +1,7 @@
 #include "filltable.h"
 
-FillTable::FillTable(QObject *parent, QString path, QMutex *m)
-    : QThread{parent}, path(path), m_(m)
+FillTable::FillTable(QObject *parent, QString path, QMutex *m, QWaitCondition *imageDealed)
+    : QThread{parent}, path(path), m_(m), imageDealed_(imageDealed)
 {}
 
 void FillTable::run()
@@ -18,11 +18,14 @@ void FillTable::run()
     // auto shapesCnt = shapes->querySubObject("Count");
     //qDebug() << "SHAPES CNT" << shapesCnt.toInt();
     // emit tableFillStarted(shapes_count);
-    QDeadlineTimer *timer = new QDeadlineTimer(1000);
+    // QDeadlineTimer *timer = new QDeadlineTimer(1000);
     for(int i = 0, j = 3; i < shapes_count; ++i) {
+        m_->lock();
+        // if(i>0)
+        // imageDealed_->wait(m_);
         // while(!m_->tryLock()) {}
         // m_->unlock();
-        // if (m_->tryLock(1000)) {
+        // if (!m_->tryLock(500)) {
             auto picture = sheet->querySubObject("Shapes(int)", j);
             picture->dynamicCall("Copy()");
             // picture->querySubObject("Copy()");
@@ -33,9 +36,10 @@ void FillTable::run()
             ++j;
             // m_->unlock();
             emit shapeReady(i, shapes_count);
-             msleep(100);
+            // msleep(100);
         // }
-        // m_->unlock();
+            imageDealed_->wait(m_);
+        m_->unlock();
     }
 
     for (int row = 19, i = 0; row <= 19 + shapes_count; ++row, ++i)

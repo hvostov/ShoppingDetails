@@ -33,6 +33,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     QMutex *m;
+    QWaitCondition *imageDealed;
+    // static QWaitCondition imageCopied;
+    // static QMutex mutex;
 
 signals:
     void havePath(QString str);

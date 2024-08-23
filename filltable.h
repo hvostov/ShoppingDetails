@@ -14,7 +14,7 @@ class FillTable : public QThread
 {
     Q_OBJECT
 public:
-    explicit FillTable(QObject *parent = nullptr, QString path = "", QMutex *m = nullptr);
+    explicit FillTable(QObject *parent = nullptr, QString path = "", QMutex *m = nullptr, QWaitCondition *imageDealed = nullptr);
     void run() override;
 
 signals:
@@ -26,6 +26,7 @@ private:
     QString path;
     QMutex *m_;
     int shapes_count = 0;
+    QWaitCondition* imageDealed_;
 
 };
 

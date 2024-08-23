@@ -14,7 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
     statusLabel(new QLabel(this)),
     markUpTotalCostLabel(new QLabel(this)),
     markUpTotalCostLabel1(new QLabel(this)),
-    m(new QMutex())
+    m(new QMutex()),
+    imageDealed(new QWaitCondition())
 {
     ui->setupUi(this);
 
@@ -88,6 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // QMutex mutex;
     // QMutex *m = &mutex;
+    // QWaitCondition imageDealed;
 }
 
 
@@ -96,6 +98,10 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+// QWaitCondition MainWindow::imageDealed;
+// QWaitCondition MainWindow::imageCopied;
+// QMutex MainWindow::mutex;
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -114,6 +120,7 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::fillImage(int i, int cnt)
 {
     m->lock();
+    // m->lock();
     //this->shapes_count = shapes_count;
     statusLabel->setText("Загружаем картинки");
     const QClipboard *clipboard = QApplication::clipboard();
@@ -130,6 +137,9 @@ void MainWindow::fillImage(int i, int cnt)
     onePercent = 50.0/double(cnt);
     progressValue += onePercent;
     progressBar->setValue(ceil(progressValue));
+    // m->unlock();
+    // imageDealed.wakeAll();
+    imageDealed->wakeAll();
     m->unlock();
 }
 
@@ -201,7 +211,7 @@ void MainWindow::countProfit()/*on_profitButton_clicked()*/ {
 
 void MainWindow::startWorkInAThread(QString path)
 {
-    FillTable *filler = new FillTable(nullptr, path, m);
+    FillTable *filler = new FillTable(nullptr, path, m, imageDealed);
     connect(filler, &FillTable::shapeReady, this, &MainWindow::fillImage);
     connect(filler, &FillTable::cellReady, this, &MainWindow::fillCell);
     connect(filler, &FillTable::tableFillFinished, this, &MainWindow::statusFinished);
