@@ -1,0 +1,9 @@
+C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Clone_of_Desktop_Qt_6_7_0_mingw_64-Debug/CMakeFiles/ShoppingDetails.dir
+C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Clone_of_Desktop_Qt_6_7_0_mingw_64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Clone_of_Desktop_Qt_6_7_0_mingw_64-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Clone_of_Desktop_Qt_6_7_0_mingw_64-Debug/CMakeFiles/list_install_components.dir
+C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Clone_of_Desktop_Qt_6_7_0_mingw_64-Debug/CMakeFiles/install.dir
+C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Clone_of_Desktop_Qt_6_7_0_mingw_64-Debug/CMakeFiles/install/local.dir
+C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Clone_of_Desktop_Qt_6_7_0_mingw_64-Debug/CMakeFiles/install/strip.dir
+C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Clone_of_Desktop_Qt_6_7_0_mingw_64-Debug/CMakeFiles/ShoppingDetails_autogen_timestamp_deps.dir
+C:/Users/ahvostov/QT_prj/ShoppingDetails/build/Clone_of_Desktop_Qt_6_7_0_mingw_64-Debug/CMakeFiles/ShoppingDetails_autogen.dir

@@ -28,7 +28,7 @@
      <number>7</number>
     </property>
     <item row="4" column="0">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="loadDataButton">
       <property name="layoutDirection">
        <enum>Qt::LeftToRight</enum>
       </property>

@@ -5,17 +5,16 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
     profitButton(new QPushButton("Рассчитать цену продажи товара")),
-    // exchangeButton(new QPushButton("Рассчитать цену в рублях")),
     profitLineEdit(new QLineEdit()),
     exchangeLineEdit(new QLineEdit()),
-    totalCostLabel(new QLabel(this)),
-    totalCostLabel1(new QLabel(this)),
+    totalCostLabelValue(new QLabel(this)),
+    totalCostLabelName(new QLabel(this)),
     progressBar(new QProgressBar(this)),
     statusLabel(new QLabel(this)),
-    markUpTotalCostLabel(new QLabel(this)),
-    markUpTotalCostLabel1(new QLabel(this)),
+    markUpTotalCostLabelValue(new QLabel(this)),
+    markUpTotalCostLabelName(new QLabel(this)),
     m(new QMutex()),
-    imageDealed(new QWaitCondition()),
+    dataDealed(new QWaitCondition()),
     purchaseCostsLabel(new QLabel(this)),
     goodsLabel(new QLabel(this)),
     shippingLabel(new QLabel(this)),
@@ -27,103 +26,88 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    profitButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    // exchangeButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    profitButton->setMinimumWidth(200);
-    // exchangeButton->setMinimumWidth(200);
-    // ui->gridLayout->setSpacing(100);
-    profitLineEdit->setPlaceholderText("Введите процент наценки");
-    profitLineEdit->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    exchangeLineEdit->setPlaceholderText("Введите курс");
-    exchangeLineEdit->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QGridLayout *rightLayout = new QGridLayout();
     ui->gridLayout->addLayout(rightLayout, 0, 5);
-    // QSpacerItem *spacer1 = new QSpacerItem(1,1,QSizePolicy::Expanding, QSizePolicy::Fixed);
-    // rightLayout->addItem(spacer1, 0, 1);
-    // rightLayout->setSizeConstraint(QLayout::SetFixedSize);
-    // rightLayout->setRowStretch(3,0);
-    // rightLayout->setColumnStretch(1,1);
     rightLayout->setVerticalSpacing(10);
-    // rightLayout->set
+    rightLayout->setRowMinimumHeight(3, 100);
+    rightLayout->setRowStretch(4,2);
+    rightLayout->setColumnStretch(0, 0);
+    rightLayout->setRowMinimumHeight(7, 80);
+    rightLayout->setRowMinimumHeight(8, 80);
 
+    QHBoxLayout * statusHlayout = new QHBoxLayout();
 
+    QWidget * statusWidget = new QWidget;
+    statusWidget->setLayout(statusHlayout);
+    ui->statusbar->addPermanentWidget(statusWidget, 2);
+
+    purchaseCostsLabel->setText("Затраты на покупку товара:");
+    rightLayout->addWidget(purchaseCostsLabel, 4, 1, 1, 2, Qt::AlignBottom);
+
+    profitButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    profitButton->setMinimumWidth(200);
+    rightLayout->addWidget(profitButton, 2, 1, 1, 2);
+    connect(profitButton, &QPushButton::clicked, this, &MainWindow::countProfit);
+
+    profitLineEdit->setPlaceholderText("Введите процент наценки");
+    profitLineEdit->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    rightLayout->addWidget(profitLineEdit, 0, 2);
+
+    exchangeLineEdit->setPlaceholderText("Введите курс");
+    exchangeLineEdit->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    rightLayout->addWidget(exchangeLineEdit, 1, 2);
+
+    statusLabel->setText("");
+    statusLabel->setMinimumSize(200,20);
+    statusHlayout->addWidget(statusLabel);
+
+    goodsLabel->setText("Товар");
+    rightLayout->addWidget(goodsLabel, 5, 1);
+
+    goodsLineEdit->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    rightLayout->addWidget(goodsLineEdit, 5, 2);
+
+    shippingLabel->setText("Доставка");
+    rightLayout->addWidget(shippingLabel, 6, 1);
+
+    shippingLineEdit->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    rightLayout->addWidget(shippingLineEdit, 6, 2);
+
+    revenueLabelTitle->setText("Выручка:");
+    rightLayout->addWidget(revenueLabelTitle, 14, 1, 1, 2, Qt::AlignBottom);
+
+    rightLayout->addWidget(totalCostLabelValue, 11, 1, 1, 2, Qt::AlignBottom);
+
+    rightLayout->addWidget(markUpTotalCostLabelValue, 13, 1, 1, 2, Qt::AlignBottom);
+
+    rightLayout->addWidget(revenueLabelValue, 15, 1, 1, 2, Qt::AlignBottom);
+
+    totalCostLabelName->setText("Общая стоимость, руб :");
+    rightLayout->addWidget(totalCostLabelName, 10, 1, 1, 2, Qt::AlignBottom);
+
+    markUpTotalCostLabelName->setText("Общая стоимость с наценкой, руб :");
+    rightLayout->addWidget(markUpTotalCostLabelName, 12, 1, 1, 2, Qt::AlignBottom);
 
     ui->statusbar->addPermanentWidget(progressBar);
     progressBar->setRange(0, 100);
     progressBar->setTextVisible(true);
-    //progressBar->setFormat("Загружаем таблицу");
     progressBar->setAlignment(Qt::AlignCenter);
     progressBar->setInvertedAppearance(true);
+    statusHlayout->addWidget(progressBar);
 
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 
-    QWidget * w = new QWidget;
-    QHBoxLayout * statusHlayout = new QHBoxLayout();
-    statusLabel->setText("");
-    statusLabel->setMinimumSize(200,20);
-    statusHlayout->addWidget(statusLabel);
-    statusHlayout->addWidget(progressBar);
-    w->setLayout(statusHlayout);
-    ui->statusbar->addPermanentWidget(w, 2);
-
     QLabel *profitLabel = new QLabel(this);
-    QLabel *exchangeLabel = new QLabel(this);
-    //QLabel *totalCostLabel = new QLabel(this);
-
     profitLabel->setText("Наценка, %");
-    exchangeLabel->setText("Курс Р к Ю");
-    // profitLabel->setMaximumWidth(100);
     rightLayout->addWidget(profitLabel, 0, 1);
-    rightLayout->addWidget(profitLineEdit, 0, 2);
+
+    QLabel *exchangeLabel = new QLabel(this);
+    exchangeLabel->setText("Курс Р к Ю");
     rightLayout->addWidget(exchangeLabel, 1, 1);
-    rightLayout->addWidget(exchangeLineEdit, 1, 2);
-    rightLayout->addWidget(profitButton, 2, 1, 1, 2);
 
-    // QSpacerItem *spacerItem = new QSpacerItem(40,80);
-    // rightLayout->addItem(spacerItem, 3,1,1,2);
-    rightLayout->setRowMinimumHeight(3, 100);
-    // rightLayout->setRowStretch(4, 0);
-
-    rightLayout->addWidget(purchaseCostsLabel, 4, 1, 1, 2, Qt::AlignBottom);
-    rightLayout->addWidget(goodsLabel, 5, 1);
-    rightLayout->addWidget(goodsLineEdit, 5, 2);
-    goodsLineEdit->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    rightLayout->addWidget(shippingLabel, 6, 1);
-    rightLayout->addWidget(shippingLineEdit, 6, 2);
-    shippingLineEdit->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    purchaseCostsLabel->setText("Затраты на покупку товара:");
-    goodsLabel->setText("Товар");
-    shippingLabel->setText("Доставка");
-
-    // rightLayout->addItem(spacerItem, 7,1,1,2);
-    rightLayout->setRowMinimumHeight(7, 80);
-    rightLayout->setRowMinimumHeight(8, 80);
-
-    rightLayout->addWidget(totalCostLabel, 11, 1, 1, 2, Qt::AlignBottom);
-    rightLayout->addWidget(totalCostLabel1, 10, 1, 1, 2, Qt::AlignBottom);
-    rightLayout->addWidget(markUpTotalCostLabel, 13, 1, 1, 2, Qt::AlignBottom);
-    rightLayout->addWidget(markUpTotalCostLabel1, 12, 1, 1, 2, Qt::AlignBottom);
-    rightLayout->addWidget(revenueLabelValue, 15, 1, 1, 2, Qt::AlignBottom);
-    rightLayout->addWidget(revenueLabelTitle, 14, 1, 1, 2, Qt::AlignBottom);
-    revenueLabelTitle->setText("Выручка:");
-
-    totalCostLabel1->setText("Общая стоимость, руб :");
-    markUpTotalCostLabel1->setText("Общая стоимость с наценкой, руб :");
-    // rightLayout->addWidget(exchangeButton, 4, 1, 1, 2, Qt::AlignTop );
-
-    // rightLayout->setRowStretch(1,1);
-    // rightLayout->setRowMinimumHeight(0, 10);
-    rightLayout->setRowStretch(0,0);
-    rightLayout->setRowStretch(4,2);
-    rightLayout->setColumnStretch(0, 0);
     connect(this, &MainWindow::havePath, this, &MainWindow::startWorkInAThread);
-    connect(profitButton, &QPushButton::clicked, this, &MainWindow::countProfit);
 
-    // QMutex mutex;
-    // QMutex *m = &mutex;
-    // QWaitCondition imageDealed;
-    qDebug() << rightLayout->rowCount() << "asodfjiaoifjoawijf";
 }
 
 
@@ -133,11 +117,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// QWaitCondition MainWindow::imageDealed;
-// QWaitCondition MainWindow::imageCopied;
-// QMutex MainWindow::mutex;
-
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_loadDataButton_clicked()
 {
     QString str;
     str = QFileDialog::getOpenFileName(this, "Выбрать файл", "C:/Users/ZBook/Desktop",
@@ -148,15 +128,15 @@ void MainWindow::on_pushButton_clicked()
         progressValue = 0;
         progressBar->setValue(progressValue);
         progressBar->show();
+        statusLabel->setText("Загружаем данные");
+        ui->loadDataButton->setEnabled(false);
     }
 }
 
 void MainWindow::fillImage(int i, int cnt)
 {
     m->lock();
-    // m->lock();
-    //this->shapes_count = shapes_count;
-    statusLabel->setText("Загружаем картинки");
+    //statusLabel->setText("Загружаем картинки");
     const QClipboard *clipboard = QApplication::clipboard();
     const QMimeData *mimeData = clipboard->mimeData();
     QLabel *label = new QLabel(this);
@@ -168,18 +148,17 @@ void MainWindow::fillImage(int i, int cnt)
     }
     ui->tableWidget->setCellWidget(row,2, label);
 
-    onePercent = 50.0/double(cnt);
+    onePercent = 50.0/static_cast<double>(cnt);
     progressValue += onePercent;
     progressBar->setValue(ceil(progressValue));
-    // m->unlock();
-    // imageDealed.wakeAll();
-    imageDealed->wakeAll();
+    dataDealed->wakeAll();
     m->unlock();
 }
 
 void MainWindow::fillCell(QString str, int i, int j)
 {
-    statusLabel->setText("Загружаем данные");
+    m->lock();
+    //statusLabel->setText("Загружаем данные");
     int row = shapes_count + i;
     QTableWidgetItem *pCell = ui->tableWidget->item(row, j);
     if(!pCell)
@@ -193,33 +172,22 @@ void MainWindow::fillCell(QString str, int i, int j)
         progressValue += onePercent;
         progressBar->setValue(ceil(progressValue));
     }
+    dataDealed->wakeAll();
+    m->unlock();
 }
 
 void MainWindow::countProfit()/*on_profitButton_clicked()*/ {
-    // qDebug() << "WOIERJFOA3FEAJIRGOIAEJ";
     double mult = 1 + profitLineEdit->text().toDouble()/100;
     double exchange = exchangeLineEdit->text().toDouble();
-    qDebug() << "WOIERJFOA3FEAJIRGOIAEJ";
-    qDebug() << mult;
-    // QString s = ui->tableWidget->item(1, 6)->text();
-    // //QTableWidgetItem *widgetItem = ui->tableWidget->item(1, 9);
-
-    // qDebug() << s;
-    // // int itemValue = widgetItem->data(Qt::DisplayRole).toInt();
-    // double itemValue = s.toDouble();
-    // qDebug() << itemValue;
-    // itemValue *= mult;
-    // QString str = QString::number(itemValue);
-    // qDebug() << str;
     double total = 0;
     double markUpTotal = 0;
     for(int row = 0; row < shapes_count; ++row) {
-        double itemValue = ui->tableWidget->item(row, 6)->text().toDouble();
-        double itemValue1 = ui->tableWidget->item(row, 8)->text().toDouble();
+        double priceOfOneProduct = ui->tableWidget->item(row, 6)->text().toDouble();
+        double priceOfAllProducts = ui->tableWidget->item(row, 8)->text().toDouble();
 
-        total += itemValue1*exchange;
-        itemValue = std::round(itemValue*exchange*10)/10;
-        QString str = QString::number(itemValue);
+        total += priceOfAllProducts*exchange;
+        priceOfOneProduct = std::round(priceOfOneProduct*exchange*10)/10;
+        QString str = QString::number(priceOfOneProduct);
             QTableWidgetItem *pCell = ui->tableWidget->item(row, 7);
             if(!pCell)
             {
@@ -228,8 +196,8 @@ void MainWindow::countProfit()/*on_profitButton_clicked()*/ {
             }
             pCell->setText(str);
 
-            itemValue = std::round(itemValue*mult*10)/10;
-            str = QString::number(itemValue);
+            priceOfOneProduct = std::round(priceOfOneProduct*mult*10)/10;
+            str = QString::number(priceOfOneProduct);
             pCell = ui->tableWidget->item(row, 9);
             if(!pCell)
             {
@@ -238,9 +206,8 @@ void MainWindow::countProfit()/*on_profitButton_clicked()*/ {
             }
             pCell->setText(str);
     }
-    totalCostLabel->setText(QString::number(total));
-    markUpTotalCostLabel->setText(QString::number(total*mult));
-    // if(goodsLineEdit->text())
+    totalCostLabelValue->setText(QString::number(total));
+    markUpTotalCostLabelValue->setText(QString::number(total*mult));
     revenueLabelValue->setText(QString::number(total*mult - goodsLineEdit->text().toDouble()
                                                - shippingLineEdit->text().toDouble()));
 
@@ -248,7 +215,7 @@ void MainWindow::countProfit()/*on_profitButton_clicked()*/ {
 
 void MainWindow::startWorkInAThread(QString path)
 {
-    FillTable *filler = new FillTable(nullptr, path, m, imageDealed);
+    FillTable *filler = new FillTable(nullptr, path, m, dataDealed);
     connect(filler, &FillTable::shapeReady, this, &MainWindow::fillImage);
     connect(filler, &FillTable::cellReady, this, &MainWindow::fillCell);
     connect(filler, &FillTable::tableFillFinished, this, &MainWindow::statusFinished);
@@ -262,72 +229,7 @@ void MainWindow::statusFinished(int cnt)
     statusLabel->setText("Таблица успешно загружена");
     progressBar->hide();
     shapes_count += cnt;
+    ui->loadDataButton->setEnabled(true);
 }
 
-// void MainWindow::onTableFillStarted(int cnt)
-// {
-//     //shapes_count += cnt;
-// }
-
-// void MainWindow::fillTable(QString str)
-// {
-//     auto excel     = new QAxObject("Excel.Application");
-//     auto workbooks = excel->querySubObject("Workbooks");
-//     auto workbook  = workbooks->querySubObject("Open(const QString&)",str);
-//     auto sheets    = workbook->querySubObject("Worksheets");
-//     auto sheet     = sheets->querySubObject("Item(int)", 1);
-//     auto shapes    = sheet->querySubObject("Shapes");
-//     auto shapesCnt = shapes->property("Count");
-//     this->shapes_count   = shapesCnt.toInt() - 2;
-//     // auto shapesCnt = shapes->querySubObject("Count");
-//     qDebug() << "SHAPES CNT" << shapesCnt.toInt();
-
-//     for(int i = 0, j = 3; i < shapes_count; ++i) {
-//         //const QString s = "Рисунок " + QString::number(i);
-//         auto picture = sheet->querySubObject("Shapes(int)", j);
-//         // picture->querySubObject("Copy()");
-//         picture->dynamicCall("Copy()");
-//         const QClipboard *clipboard = QApplication::clipboard();
-//         const QMimeData *mimeData = clipboard->mimeData();
-//         if (mimeData->hasImage()) {
-//             QLabel *label = new QLabel(this);
-//             label->setPixmap(qvariant_cast<QPixmap>(mimeData->imageData()));
-//             label->setScaledContents(true);
-//             ui->tableWidget->setCellWidget(i,2, label);
-//             ++j;
-//         }
-//         else if (i > 0) {
-//             --i;
-//         }
-//     }
-//     QProgressBar *progressBar = new QProgressBar();
-//     progressBar->setRange(0, 100);
-//     ui->statusbar->addWidget(progressBar);
-//     int progressValue = 0;
-//     for (int row = 19, i = 0; row <= 19 + shapes_count; ++row, ++i)
-//     {
-//         for(int col = 4, j = 0; col < 14; ++col) {
-//             if (col != 7) {
-//                 auto cCell = sheet->querySubObject("Cells(int,int)", row, col);
-//                 //ui->tableWidget->//setCellWidget(i, j, cCell->dynamicCall("Value()").toString());
-//                 QString str = cCell->dynamicCall("Value()").toString();
-//                 QTableWidgetItem *pCell = ui->tableWidget->item(i, j);
-//                 if(!pCell)
-//                 {
-//                     pCell = new QTableWidgetItem;
-//                     ui->tableWidget->setItem(i, j, pCell);
-//                 }
-//                 pCell->setText(str);
-//                 ++j;
-//             }
-
-//         }
-//         int onePercent = 100/shapes_count;
-//         progressValue += onePercent;
-//         progressBar->setValue(progressValue);
-//         qApp->processEvents();
-//     }
-//     //delete progressBar;
-
-// }
 
